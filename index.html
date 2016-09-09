@@ -1,137 +1,189 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CSS3</title>
-	<style>
-		.stage{
-			position:absolute;
-			top:0;
-			left:0;
-			width:100%;
-			height:100%;
-			background-color:rgb(38, 145, 201);
-			overflow:hidden;
-
-		}
-		.sheep{
-			width:154px;
-			height:117px;
-			background-image:url('sheep.png');
-			background-position:0 0;
-			position:absolute;
-			right:0;
-			bottom:50px;
-			background-repeat:no-repeat;
-			cursor:-webkit-grabbing;
-		}
-	</style>
+	<title>微信平台</title>
+	<link rel="stylesheet" href="style/jquery.fullPage.css">
+	<link rel="stylesheet" href="style/style.css">
+	<link rel="stylesheet" href="Font-Awesome-4.4.0/css/font-awesome.min.css">
 </head>
-<body>
-	<div class="stage" id="stage">
-	</div>
-	<script>
-		var stage=document.getElementById("stage");
-		var SHEEP_WIDTH=164,TRAN_SPEED=10,SPRIPT_SPEED=70;
-		var screenWidth=window.innerWidth;
-		window.onresize = function(){
-			screenWidth=window.innerWidth;
-		}
-                createSheep();
-		var create=setInterval(createSheep,1500);
-		//创建小羊
-		function createSheep(){
-			//限制最多9只小羊
-			sheeps=stage.childNodes;
-			if(sheeps.length>8){
-				return false;
-			}
-			var sheep=new Sheep();
-			setMove(sheep);
-		}
-		//初始化小羊
-		function Sheep(){
-			this.tran_y=0;
-			this.sprit_left=0;
-			this.spriptSpeed=SPRIPT_SPEED+20*Math.random();
-			this.tranSpeed=TRAN_SPEED+TRAN_SPEED*Math.random();
-			this.tran_x=SHEEP_WIDTH+400*Math.random();
-			this.sheepDom=document.createElement("div");
-			this.sheepDom.className="sheep";
-			this.sheepDom.style.transform='translate3d('+SHEEP_WIDTH+'px, 0, 0)';
-			stage.appendChild(this.sheepDom);
-			this.spritTop=0;
-			this.catch=false;
-			this.x=0;
-			this.y=0;
-		}
-		//移动的小羊
-		function setMove(sheep){
-			var sprit=setInterval(spritMove,sheep.spriptSpeed);
-			var walkl=setInterval(walkMove,sheep.spriptSpeed);
-			//改变背景图片位置
-			function spritMove(){
-				if(sheep.sprit_left<(SHEEP_WIDTH*7)){
-					sheep.sprit_left=sheep.sprit_left+SHEEP_WIDTH;
-				}else{
-					sheep.sprit_left=0;
-				}
-				sheep.sheepDom.style.backgroundPosition=-sheep.sprit_left+'px '+sheep.spritTop+'px';
-			}
-			//小羊移动
-			function walkMove(){
-				sheep.sheepDom.style.transform='translate3d('+sheep.tran_x+'px, '+sheep.tran_y+'px, 0)';
-				if(sheep.tran_x>-(screenWidth+SHEEP_WIDTH+100)){
-					sheep.tran_x=sheep.tran_x-sheep.tranSpeed;
-				}else{
-					clearInterval(walkl);
-					clearInterval(sprit);
-					stage.removeChild(sheep.sheepDom);
-					sheep=null;
-				}
-			}
-			//鼠标按下
-			sheep.sheepDom.addEventListener('mousedown',function(ev){
-				sheep.spritTop=-128;
-				sheep.tranSpeed=0;
-				sheep.catch=true;
-				var oEvent = event || ev;
-				sheep.x=oEvent.pageX;
-				sheep.y=oEvent.pageY;
-			},false);
-			//鼠标移开
-			sheep.sheepDom.addEventListener('mouseup',function(){
-				if(sheep.catch){
-					sheep.spritTop=0;
-					sheep.tranSpeed=TRAN_SPEED+TRAN_SPEED*Math.random();
-					sheep.catch=false;
-					sheep.tran_y=0;
-				}
-			},false);
-			//鼠标离开
-			sheep.sheepDom.addEventListener('mouseout',function(ev){
-				if(sheep.catch){
-					sheep.spritTop=0;
-					sheep.tranSpeed=TRAN_SPEED+TRAN_SPEED*Math.random();
-					sheep.catch=false;
-					sheep.tran_y=0;
-				}
 
-			},false);
-			//鼠标移动，鼠标移动是有问题的，不应该存在鼠标从小羊身上移开的情况，因为此时小羊应该随着鼠标移动
-			sheep.sheepDom.addEventListener('mousemove',function(ev){
-				if(sheep.catch){
-					var oEvent = event || ev;
-					sheep.tran_x=sheep.tran_x-(sheep.x-oEvent.pageX);
-					sheep.tran_y=sheep.tran_y-(sheep.y-oEvent.pageY);
-					sheep.sheepDom.style.transform='translate3d('+sheep.tran_x+'px, '+sheep.tran_y+'px, 0)';
-					sheep.x=oEvent.pageX;
-					sheep.y=oEvent.pageY;
+<body>
+<!--header strat-->
+<header>
+	<div class="wrapper clearfix" style="width: 1204px;">
+		<h1 class="fl">微信公众号<em>服务管理平台</em></h1>
+		<div class="menu fr">
+			<ul class="clearfix nav">
+				<li data-menuanchor="page1"><a href="#page1">微信</a></li>
+				<li data-menuanchor="page2"><a href="#page2">微营销</a></li>
+				<li data-menuanchor="page3"><a href="#page3">公众平台</a></li>
+				<li data-menuanchor="page4"><a href="#page4">微菜单</a></li>
+				<li data-menuanchor="page5"><a href="#page5">微推送</a></li>
+				<li data-menuanchor="page6"><a href="#page6">微官网</a></li>
+				<li data-menuanchor="page7"><a href="#page7">微会员</a></li>
+				<li data-menuanchor="page8"><a href="#page8">微统计</a></li>
+				<li data-menuanchor="page9"><a href="#page9">大转盘</a></li>
+			</ul>
+		</div>
+	</div>
+</header>
+<!--header end-->
+<!--main strat-->
+<div id="dowebok">
+	<div class="section page1">
+		<div class="wrapper">
+			<h3	><img src="images/page1-1.png" height="112" width="461" class="imgpng"></h3>
+			<div class="page1_left"><img src="images/page1-2.png" height="281" width="391" class="imgpng"></div>
+			<div class="page1_right">
+				<h4>让您的微信公众平台-<em>与众不同</em></h4>
+				<ul>
+					<li><i class="fa fa-check"></i>一站式企业微信托管服务</li>
+					<li><i class="fa fa-check"></i>7*24小时的专业服务能力</li>
+					<li><i class="fa fa-check"></i>专业策划执行监控团队</li>
+					<li><i class="fa fa-check"></i>个性化定制开发</li>
+					<li><i class="fa fa-check"></i>多年网络营销经验</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="section page2">
+		<div class="wrapper">
+			<h2>人人都在微信！客户在哪里，营销就在哪里</h2>
+			<div class="intro">
+				微信目前拥有超过4亿用户<br>
+				● 微信已经成为移动互联网入口<br>
+				● 微信是一个轻量级APP平台<br>
+				● 微信是最好的O2O平台<br>
+				● 微信营销是继微博后的最大营销机遇！
+			</div>
+			<div class="apply">服务申请
+				<i class="fa fa-chevron-circle-right" style="vertical-align: middle;margin-left: 10px;font-size: 24px;"></i></div>
+			<div class="photos"><img src="images/page2-1.png" class="imgpng"></div>
+		</div>
+	</div>
+	<div class="section page3">
+		<div class="wrapper">
+			<h2>微信公众平台=企业的自媒体+客户管理平台</h2>
+			<div class="intro">
+				● 微信公众号媒体属性:10万个粉丝等于地方性报纸;100万个粉丝<br>
+				等于全国性的报纸头条新闻。 <br>
+				● 产品销售平台:在线购买、在线支付、促销活动。最活跃、反应 <br>
+				速度最快、互动最强的营销平台 <br>
+				● 人才招聘平台：免费的人才招聘渠道，未来人才招聘的主流渠道 <br>
+				● 客户：客户在线互动、客户体验、新品试用、消费者意见调研、在<br>
+				线咨询甚至网上订餐、送货服务、钟点服务、上门维修等。
+			</div>
+			<div class="apply apply1">服务申请<i class="fa fa-chevron-circle-right" style="vertical-align: middle;margin-left: 10px;font-size: 24px;"></i></div>
+			<div class="photos"><img src="images/page3-1.png" class="imgpng"></div>
+		</div>
+
+	</div>
+	<div class="section page4">
+		<div class="wrapper">
+			<h2>微信自定义菜单 —— 打造最便捷的微信内置APP</h2>
+			<div class="intro">
+				微信营销平台提供微信公众号自定义菜单管理功能，用户无需再通过输入关键词触发回复，直接点击菜单就可以看相关的内容，微信营销平台可与企业原有Wap进行打通，复用企业APP原有功能，同时可定制个性化功能、使用HTML5新技术进行无限拓展，帮助企业打造最便捷、易推广的微信内置APP，此功能如果结合微信3G网站可以使您的公众号用户体验更好，带给粉丝不一样的感受。
+			</div>
+			<div class="apply apply1">服务申请<i class="fa fa-chevron-circle-right" style="vertical-align: middle;margin-left: 10px;font-size: 24px;"></i></div>
+			<div class="photos"><img src="images/page4-1.png" class="imgpng"></div>
+		</div>
+
+	</div>
+	<div class="section page5">
+		<div class="wrapper">
+			<h2>微信推送：<p>与公众平台无缝接入、关注图文欢迎信息
+				自定义图文回复、关键词匹配回复</p></h2>
+			<div class="intro">
+				向粉丝更直观的展示企业形象 公众平台要直接向粉丝展示企业形象和产品！
+				当客户首次关注时，直接推送企业形象！
+				当客户推送新消息，系统自行匹配公司产品关键词，自动识别并且自动生成图文消息返回给用户。
+			</div>
+			<div class="apply apply1">服务申请<i class="fa fa-chevron-circle-right" style="vertical-align: middle;margin-left: 10px;font-size: 24px;"></i></div>
+			<div class="photos"><img src="images/page5-1.png" class="imgpng"></div>
+		</div>
+	</div>
+	<div class="section page6">
+		<div class="wrapper">
+			<h2>微官网——五分钟打造超炫微信3G网站</h2>
+			<div class="intro">
+				微官网是指将企业信息、服务、活动等内容通过微信网页的方式进行表现，用户只要通过简单的设置，就能快速生成属于您自己的微信3G网站，并且有各种精美模板，供您选择，还有自定义模版，可以设计出自己的风格，不但提高了信息量，也使信息的展现更加赏心悦目，进一步提高用户体验。
+			</div>
+			<div class="apply apply1">服务申请<i class="fa fa-chevron-circle-right" style="vertical-align: middle;margin-left: 10px;font-size: 24px;"></i></div>
+			<div class="photos"><img src="images/page6-1.png" class="imgpng"></div>
+		</div>
+	</div>
+	<div class="section page7">
+		<div class="wrapper">
+			<h2>微会员卡——移动时代的社会化会员管理平台</h2>
+			<div class="intro">
+				1．有微信就有会员卡：面向5亿微信用户，扫一扫即刻发放电子会员卡，锁定客户，弹指之间。省去传统会员卡办理繁琐手续。<br>
+				2．降低发卡成本 提升用户体验：无需收银员介入，无需制作会员卡片。节约大量人力，财力，办卡效率更高<br>
+				3．新潮流行，更乐于接受：新潮流行市场的办理会员卡方式，由抵触心态转换为好奇，积极参与的心态
+			</div>
+			<div class="apply apply1">服务申请<i class="fa fa-chevron-circle-right" style="vertical-align: middle;margin-left: 10px;font-size: 24px;"></i></div>
+			<div class="photos"><img src="images/page7-1.png" class="imgpng"></div>
+		</div>
+	</div>
+	<div class="section page8">
+		<div class="wrapper">
+			<h2>微统计<p>粉丝增长统计、消息推送统计<br>
+				实时数据统计、监控运营效果</p></h2>
+			<div class="intro">
+				信营销平台可以实时统计微信公众号的粉丝关注情况和用户推送请求数，根据统计对相关推广营销活动效果及某些敏感因素对您的影响作出判断，并对相关市场行为作出相应调整，从一定程度上实现了对市场的监控与及时应对。
+			</div>
+			<div class="apply apply1">服务申请<i class="fa fa-chevron-circle-right" style="vertical-align: middle;margin-left: 10px;font-size: 24px;"></i></div>
+			<div class="photos"><img src="images/page8-1.png" class="imgpng"></div>
+		</div>
+	</div>
+	<div class="section page9">
+		<div class="wrapper">
+			<h2>微信大转盘  互动营销  引爆人气</h2>
+			<div class="intro">
+				微信大转盘，微信公众号营销顶级神器！
+				微信营销是一种新型的营销模式，由于微信更重视用户之间的互动，故而这种营销推广不不能盲目地套用微博营销的单纯大量广告推送方式。这种方式在微信营销中的效果非常差，会令用户反感，继而取消去企业或商家的微信公众账号关注。对于企业来说，做微信推广重要的一个方面就是提高用户和公众账号之间的黏度，而微信大转盘、微信优惠券是其中最具杀伤力的活动。
+				开启大转盘功能，直接发布幸运大转盘活动，设置活动内容、奖项及中奖比例，带给粉丝完全不同的感受。
+			</div>
+			<div class="apply apply1">服务申请<i class="fa fa-chevron-circle-right" style="vertical-align: middle;margin-left: 10px;font-size: 24px;"></i></div>
+			<div class="photos"><img src="images/page9-1.png" class="imgpng"></div>
+			<div class="photos"><img src="images/page9-2.png" class="imgpng"></div>
+		</div>
+	</div>
+	<div class="section page10" id="section-footer">
+		<div class="wrapper" id="footer-text">
+			<p>"微信营销平台"是由东莞市微信信息技术有限公司开发运营的一个关于微信公众号服务及微网站服务的微信公众号在线管理平台。<br>
+				服务咨询：0769-33350155  13713411721 QQ:1648141588  渠道合作：13713411721  程先生 QQ：807679670<br>
+				辽宁省 黑龙江省 吉林省 请联系024-22732169 QQ:921668578 </p>
+		</div>
+	</div>
+</div>
+
+<!--main end-->
+
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery.fullPage.min.js"></script>
+<script>
+	$(function(){
+		$('#dowebok').fullpage({
+			'navigation': true,
+			anchors: ['page1', 'page2', 'page3', 'page4','page5','page6','page7','page8','page9','footer'],
+			menu: '#menu',
+			afterLoad: function(anchorLink, index){
+				if(index == 10){
+					$('.page9').addClass('actived');
 				}
-			},false);
-		}
-	</script>
-	
+				if(index == 8){
+					$('.page9').removeClass('actived');
+				}
+			},
+			onLeave: function(index, direction){
+				if(index == 9){
+					$('.page9').addClass('actived');
+				}
+			}
+		});
+	});
+</script>
 </body>
 </html>
